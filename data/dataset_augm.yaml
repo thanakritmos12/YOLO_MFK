@@ -1,0 +1,18 @@
+train: D:\yolov5-master\data\images\augm_train
+val: D:\yolov5-master\data\images\val
+
+nc: 13
+names: 
+  0: Carb
+  1: Protein
+  2: Veggie
+  3: Crispy chicken rice
+  4: Curry
+  5: Kao mok kai
+  6: Noodles
+  7: Padthai
+  8: Porridge
+  9: Somtum
+  10: Spicy chicken rice
+  11: Stir-fried basil with beef 
+  12: Stir-fried yellow noodles
