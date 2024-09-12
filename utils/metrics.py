@@ -334,7 +334,7 @@ def wh_iou(wh1, wh2, eps=1e-7):
 
 
 @threaded
-def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=()):
+def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=(), csv_dir=Path("pr_curve1.csv")):
     """Plots precision-recall curve, optionally per class, saving to `save_dir`; `px`, `py` are lists, `ap` is Nx2
     array, `names` optional.
     """
@@ -347,7 +347,7 @@ def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=()):
     else:
         ax.plot(px, py, linewidth=1, color="grey")  # plot(recall, precision)
 
-    ax.plot(px, py.mean(1), linewidth=3, color="blue", label=f"all classes {ap[:, 0].mean():.3f} mAP@0.5")
+    ax.plot(px, py.mean(1), linewidth=3, color="blue", label="all classes %.3f mAP@0.5" % ap[:, 0].mean())
     ax.set_xlabel("Recall")
     ax.set_ylabel("Precision")
     ax.set_xlim(0, 1)
@@ -357,6 +357,12 @@ def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=()):
     fig.savefig(save_dir, dpi=250)
     plt.close(fig)
 
+    with open(csv_dir, mode='w', newline='') as file:
+        writer = csv_dir.writer(file)
+        writer.writerow(["Recall"] + [f"Precision_{name}" for name in names] + ["mAP"])
+        for i in range(len(px)):
+            row = [px[i]] + list(py[i, :]) + [ap[:, 0].mean()]  # each row contains recall, precisions, and mean AP
+            writer.writerow(row)
 
 @threaded
 def plot_mc_curve(px, py, save_dir=Path("mc_curve.png"), names=(), xlabel="Confidence", ylabel="Metric"):
