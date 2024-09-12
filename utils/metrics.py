@@ -334,7 +334,7 @@ def wh_iou(wh1, wh2, eps=1e-7):
 
 
 @threaded
-def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=(), csv_dir=Path("pr_curve1.csv")):
+def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=(), csv_dir=Path("pr_curve2.csv")):
     """Plots precision-recall curve, optionally per class, saving to `save_dir`; `px`, `py` are lists, `ap` is Nx2
     array, `names` optional.
     """
